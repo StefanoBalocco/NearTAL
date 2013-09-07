@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NearTAL - data-tal-repeat test</title>
+</head>
+<body>
+	<span data-tal-repeat="element arrayFull" data-tal-content="element/name" class="ArrayFull"/>
+	<div data-tal-repeat="element arrayFull" class="ArrayFull">
+		<span data-tal-content="element/name" />
+		<span data-tal-content="element/description" />
+	</div>
+	<span data-tal-repeat="element arrayEmpty" data-tal-content="element/name" class="ArrayEmpty"/>
+	<div data-tal-repeat="element arrayEmpty" class="ArrayEmpty">
+		<span data-tal-content="element/name" />
+		<span data-tal-content="element/description" />
+	</div>
+	<span data-tal-repeat="element defaut" data-tal-content="element/name" class="Default"/>
+	<div data-tal-repeat="element default" class="Default">
+		<span data-tal-content="element/name | default">Empty name</span>
+		<span data-tal-content="element/description | default">Empty description</span>
+	</div>
+</body>
+</html>

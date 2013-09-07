@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NearTAL - data-tal-define test</title>
+</head>
+<body>
+	<p data-tal-content="text">Sample text</p>
+	<p data-tal-content="text"></p>
+	<p data-tal-define="text string:data-tal-define test">
+		<span data-tal-content="text">Sample text</span>
+		<span data-tal-content="text"></span>
+		<span data-tal-define="local text string:data-tal-define redefine test">
+			<span data-tal-content="text">Sample text</span>
+			<span data-tal-content="text"></span>
+		</span>
+		<span data-tal-content="text">Sample text</span>
+		<span data-tal-content="text"></span>
+	</p>
+	<p data-tal-content="text">Sample text</p>
+	<p data-tal-content="text"></p>
+	<p data-tal-define="local text string:data-tal-define test - local">
+		<span data-tal-content="text">Sample text</span>
+		<span data-tal-content="text"></span>
+		<span data-tal-define="text string:data-tal-define redefine test">
+			<span data-tal-content="text">Sample text</span>
+			<span data-tal-content="text"></span>
+		</span>
+		<span data-tal-content="text">Sample text</span>
+		<span data-tal-content="text"></span>
+	</p>
+	<p data-tal-content="text">Sample text</p>
+	<p data-tal-content="text"></p>
+	<p data-tal-define="world text string:data-tal-define test - global">
+		<span data-tal-content="text">Sample text</span>
+		<span data-tal-content="text"></span>
+		<span data-tal-define="local text string:data-tal-define redefine test">
+			<span data-tal-content="text">Sample text</span>
+			<span data-tal-content="text"></span>
+		</span>
+		<span data-tal-content="text">Sample text</span>
+		<span data-tal-content="text"></span>
+	</p>
+	<p data-tal-content="text">Sample text</p>
+	<p data-tal-content="text"></p>
+</body>
+</html>

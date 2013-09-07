@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NearTAL - data-tal-replace test</title>
+</head>
+<body>
+	<a data-tal-attributes="href default" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href default" href="http://www.test.com" />
+	<a data-tal-attributes="href text" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href text" href="http://www.test.com" />
+	<a data-tal-attributes="href boolT" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href boolT" href="http://www.test.com" />
+	<a data-tal-attributes="href boolF" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href boolF" href="http://www.test.com" />
+	<a data-tal-attributes="href boolF | default" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href boolF | default" href="http://www.test.com" />
+	<a data-tal-attributes="href boolT | default" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href boolT | default" href="http://www.test.com" />
+	<a data-tal-attributes="href nothing" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href nothing" href="http://www.test.com" />
+	<a data-tal-attributes="href CONTEXTS/default" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href CONTEXTS/default" href="http://www.test.com" />
+	<a data-tal-attributes="href CONTEXTS/nothing" href="http://www.test.com">Sample text</a>
+	<a data-tal-attributes="href CONTEXTS/nothing" href="http://www.test.com" />
+</body>
+</html>

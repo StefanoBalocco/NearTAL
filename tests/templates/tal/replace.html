@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NearTAL - data-tal-replace test</title>
+</head>
+<body>
+	<p data-tal-replace="default">Sample text</p>
+	<p data-tal-replace="default" />
+	<p data-tal-replace="text">Sample text</p>
+	<p data-tal-replace="text" />
+	<p data-tal-replace="boolT">Sample text</p>
+	<p data-tal-replace="boolT" />
+	<p data-tal-replace="boolF">Sample text</p>
+	<p data-tal-replace="boolF" />
+	<p data-tal-replace="boolF | default">Sample text</p>
+	<p data-tal-replace="boolF | default" />
+	<p data-tal-replace="boolT | default">Sample text</p>
+	<p data-tal-replace="boolT | default" />
+	<p data-tal-replace="nothing">Sample text</p>
+	<p data-tal-replace="nothing" />
+	<p data-tal-replace="CONTEXTS/default">Sample text</p>
+	<p data-tal-replace="CONTEXTS/default" />
+	<p data-tal-replace="CONTEXTS/nothing">Sample text</p>
+	<p data-tal-replace="CONTEXTS/nothing" />
+</body>
+</html>

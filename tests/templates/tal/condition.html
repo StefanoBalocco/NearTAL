@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NearTAL - data-tal-condition test</title>
+</head>
+<body>
+	<p data-tal-condition="default">Sample text</p>
+	<p data-tal-condition="default" />
+	<p data-tal-condition="text">Sample text</p>
+	<p data-tal-condition="text" />
+	<p data-tal-condition="boolT">Sample text</p>
+	<p data-tal-condition="boolT" />
+	<p data-tal-condition="boolF">Sample text</p>
+	<p data-tal-condition="boolF" />
+	<p data-tal-condition="boolF | default">Sample text</p>
+	<p data-tal-condition="boolF | default" />
+	<p data-tal-condition="boolT | default">Sample text</p>
+	<p data-tal-condition="boolT | default" />
+	<p data-tal-condition="nothing">Sample text</p>
+	<p data-tal-condition="nothing" />
+	<p data-tal-condition="CONTEXTS/default">Sample text</p>
+	<p data-tal-condition="CONTEXTS/default" />
+	<p data-tal-condition="CONTEXTS/nothing">Sample text</p>
+	<p data-tal-condition="CONTEXTS/nothing" />
+</body>
+</html>
