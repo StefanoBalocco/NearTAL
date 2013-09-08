@@ -340,8 +340,8 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 									}
 									case 'condition':
 									{
-										$fastAnswers = NearTAL_Compiler_ParseTALES( $tmpVariable[ 'compiledExpression' ], $attribute, $node->attributes, '$localVariables[\'template\'][' . $localVariablesIndex . ']', true, true );
-										if( $fastAnswers[ 0 ] || $fastAnswers[ 1 ] )
+										$fastAnswers = NearTAL_Compiler_ParseTALES( $tmpVariable[ 'compiledExpression' ], $attribute, $node->attributes, '$localVariables[\'template\'][' . $localVariablesIndex . ']', true, false );
+										if( $fastAnswers[ 1 ] )
 										{
 											$node->delete( );
 										}
