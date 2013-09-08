@@ -192,7 +192,7 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 			}
 		}
 		// "Not" is evalutated here.
-		$compiledExpression = ( ( $bool ? '(' : null ) . $compiledExpression . ( $bool ? ')&&' . ( $reverseBool ? '!' : null ) . sprintf( '(' . ( $defaultIsFalse ? '!' : null ) . '%1$s[1]' . ( $defaultIsFalse ? '&&' : '||(' ) . '!is_null(%1$s[0])&&((is_bool(%1$s[0])&&%1$s[0])||(is_string(%1$s[0])&&(0<strlen(%1$s[0]))||(is_numeric(%1$s[0])&&(0<%1$s[0]))))' . ( $defaultIsFalse ? null : ')' ) . ')', $target ) : null ) );
+		$compiledExpression = ( ( $bool ? '(' : null ) . $compiledExpression . ( $bool ? ')&&' . ( $reverseBool ? '!' : null ) . sprintf( '(' . ( $defaultIsFalse ? '!' : null ) . '%1$s[1]' . ( $defaultIsFalse ? '&&' : '||(' ) . '!empty(%1$s[0])&&((is_bool(%1$s[0])&&%1$s[0])||(is_string(%1$s[0])&&(0<strlen(%1$s[0]))||(is_numeric(%1$s[0])&&(0<%1$s[0]))||is_array(%1$s[0])||is_object(%1$s[0])))' . ( $defaultIsFalse ? null : ')' ) . ')', $target ) : null ) );
 		return $returnValue;
 	}
 
