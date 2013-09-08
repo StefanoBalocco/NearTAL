@@ -462,7 +462,7 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 								}
 								else
 								{
-									$node->attributes[ $name ] = null;
+									unset( $node->attributes[ $name ] );
 								}
 							}
 						}
