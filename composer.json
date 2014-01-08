@@ -1,5 +1,5 @@
 {
-	"name": "stefanobalocco/NearTAL",
+	"name": "stefanobalocco/neartal",
 	"type": "library",
 	"description": "PHP HTML5 template engine losely based on TAL specification",
 	"keywords":
