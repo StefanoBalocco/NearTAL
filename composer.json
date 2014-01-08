@@ -1,0 +1,7 @@
+{
+	"name": "stefanobalocco/NearTAL",
+	"require":
+	{
+		"php": ">=5.2.0"
+	}
+}

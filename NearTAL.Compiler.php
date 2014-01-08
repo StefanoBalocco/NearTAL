@@ -314,7 +314,7 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 					);
 					foreach( $compilerData[ 'keywords' ] as $keyword )
 					{
-						$attribute = $node->getAttribute( 'data-tal-' . $keyword );
+						$attribute = trim( $node->getAttribute( 'data-tal-' . $keyword ) );
 						if( !is_null( $attribute ) )
 						{
 							if( !is_array( $attribute ) && !empty( $attribute ) )
@@ -329,13 +329,12 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 										{
 											$tmpVariable[ 'name' ] = str_replace( '\'', '&#039', $tmpVariable[ 'elements' ][ $j ][ 2 ] );
 											$fastAnswers = NearTAL_Compiler_ParseTALES( $tmpVariable[ 'compiledExpression' ], $tmpVariable[ 'elements' ][ $j ][ 3 ], $node->attributes, '$tmpVariable' );
-											$changes[ 'outside' ][ 'pre' ] .= '$localVariables[\'template\'][' . $localVariablesIndex . ']=(' . $tmpVariable[ 'compiledExpression' ] . '&&!$tmpVariable[1]);if($localVariables[\'template\'][' . $localVariablesIndex++ . ']){NearTAL_LocalVariablesPush($localVariables,\'defined\',\'' . $tmpVariable[ 'name' ] . '\',$tmpVariable[0]);}unset($tmpVariable);';
+											$changes[ 'outside' ][ 'pre' ] .= '$localVariables[\'template\'][' . $localVariablesIndex . ']=(' . $tmpVariable[ 'compiledExpression' ] . '&&!$tmpVariable[1]);if($localVariables[\'template\'][' . $localVariablesIndex++ . ']){NearTAL_LocalVariablesPush($localVariables,\'defined\',\'' . $tmpVariable[ 'name' ] . '\',$tmpVariable[0]);}';
 											if( 'world' != $tmpVariable[ 'elements' ][ $j ][ 1 ] )
 											{
 												$changes[ 'outside' ][ 'post' ] = 'if($localVariables[\'template\'][' . ( $localVariablesIndex - 1 ) . ']){NearTAL_LocalVariablesPop($localVariables,\'defined\',\'' . $tmpVariable[ 'name' ] . '\');unset($localVariables[\'template\'][' . ( $localVariablesIndex - 1 ) . ']);}' . $changes[ 'outside' ][ 'post' ];
 											}
 										}
-										unset( $tmpVariable );
 										break;
 									}
 									case 'condition':
@@ -421,12 +420,22 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 										}
 										break;
 									}
+									case 'raw-attributes':
+									{
+										$tmpVariable = array( );
+										$tmpVariable[ 'count' ] = preg_match_all( '/(?:[\s]*(.+?)[\s]*$)/', $attribute, $tmpVariable[ 'elements' ], PREG_SET_ORDER );
+										if( 1 == $tmpVariable[ 'count' ] )
+										{
+											$changes[ 'raw-attributes' ] = $tmpVariable[ 'elements' ][ $j ][ 1 ];
+										}
+										break;
+									}
 									case 'omit-tag':
 									{
 										$fastAnswers = NearTAL_Compiler_ParseTALES( $tmpVariable[ 'compiledExpression' ], $attribute, $node->attributes, '$tmpVariable', true );
 										if( !$fastAnswers[ 0 ] && !$fastAnswers[ 1 ] )
 										{
-											$changes[ 'outside' ][ 'pre' ] .= '$localVariables[\'template\'][' . $localVariablesIndex . ']=!(' . $tmpVariable[ 'compiledExpression' ] . ');unset($tmpVariable);if($localVariables[\'template\'][' . $localVariablesIndex . ']){';
+											$changes[ 'outside' ][ 'pre' ] .= '$localVariables[\'template\'][' . $localVariablesIndex . ']=!(' . $tmpVariable[ 'compiledExpression' ] . ');if($localVariables[\'template\'][' . $localVariablesIndex . ']){';
 											// If isn't selfclosed OR if I already need to put some code between starting and closing tag, I put some data "inside"
 											// TODO: a regexp to remove ? >< ?php and {}
 											if( !$node->self_close || isset( $changes[ 'inside' ][ 'pre' ] ) || isset( $changes[ 'inside' ][ 'post' ] ) || 0 < count( $changes[ 'attributes' ] ) )
@@ -453,7 +462,7 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 								if( !$fastAnswers[ 1 ] )
 								{
 									$tmpVariable[ 'exists' ] = array_key_exists( $name, $node->attributes );
-									$tmpVariable[ 'attribute' ] = '<?php if(' . $tmpVariable[ 'compiledExpression' ] . ( !$tmpVariable[ 'exists' ] ? '&&!$tmpVariable[1]' : null ) . '){?>' . $name . '="<?php echo('. ( $tmpVariable[ 'exists' ] ? '$tmpVariable[1]?\'' . str_replace( '\'', '&#039', $node->attributes[ $name ] ) . '\':' : null ) . '(is_bool($tmpVariable[0])?($tmpVariable[0]?1:0):$tmpVariable[0]));?>"<?php }unset($tmpVariable);?>';
+									$tmpVariable[ 'attribute' ] = '<?php if(' . $tmpVariable[ 'compiledExpression' ] . ( !$tmpVariable[ 'exists' ] ? '&&!$tmpVariable[1]' : null ) . '){?>' . $name . '="<?php echo('. ( $tmpVariable[ 'exists' ] ? '$tmpVariable[1]?\'' . str_replace( '\'', '&#039', $node->attributes[ $name ] ) . '\':' : null ) . '(is_bool($tmpVariable[0])?($tmpVariable[0]?1:0):$tmpVariable[0]));?>"<?php }?>';
 									$node->attributes[ $tmpVariable[ 'attribute' ] ] = $tmpVariable[ 'attribute' ];
 									if( $tmpVariable[ 'exists' ] )
 									{
@@ -467,7 +476,18 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 							}
 						}
 					}
-					unset( $tmpVariable );
+					if( !empty( $changes[ 'raw-attributes' ] ) )
+					{
+						$fastAnswers = NearTAL_Compiler_ParseTALES( $tmpVariable[ 'compiledExpression' ], $changes[ 'raw-attributes' ], $node->attributes, '$tmpVariable' ) ;
+						if( !$fastAnswers[ 0 ] )
+						{
+							if( !$fastAnswers[ 1 ] )
+							{
+								$tmpVariable[ 'attribute' ] = '<?php if(' . $tmpVariable[ 'compiledExpression' ] . '&&!$tmpVariable[1]' . '){?> <?phpecho((is_bool($tmpVariable[0])?($tmpVariable[0]?1:0):$tmpVariable[0]));}?>';
+								$node->attributes[ $tmpVariable[ 'attribute' ] ] = null;
+							}
+						}
+					}
 					if( !is_null( $changes[ 'outside' ][ 'pre'] ) )
 					{
 						$position = $node->index( true );
@@ -514,6 +534,7 @@ if( defined( 'NearTAL' ) && !defined( 'NearTAL_Compiler' ) )
 					}
 				}
 				$output .= str_replace( "?>\n", "?>\n\n", str_replace( "\r", '', $parser ) ) . '<?php }?>';
+				unset( $parser );
 				$file = null;
 				if( ( false !== ( $temporaryFilename = tempnam( $directories[ 'temp' ], 'TAL' ) ) ) && ( false !== ( $file = fopen( $temporaryFilename, 'wb' ) ) ) )
 				{
