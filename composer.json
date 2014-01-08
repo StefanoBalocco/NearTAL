@@ -1,5 +1,25 @@
 {
 	"name": "stefanobalocco/NearTAL",
+	"type": "library",
+	"description": "PHP HTML5 template engine losely based on TAL specification",
+	"keywords":
+	[
+		"html5",
+		"template engine",
+		"templating",
+		"zope",
+		"tal"
+	],
+	"homepage": "http://github.com/StefanoBalocco/NearTAL",
+	"license": "MIT-like",
+	"authors":
+	[
+		{
+			"name": "Stefano Balocco",
+			"email": "stefano.balocco@gmail.com",
+			"homepage": "http://stefano.balocco.name"
+		}
+	],
 	"require":
 	{
 		"php": ">=5.2.0"
